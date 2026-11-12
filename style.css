@@ -28,6 +28,10 @@
 
 html { scroll-behavior: smooth; }
 
+/* Страховка от горизонтальной прокрутки на любых телефонах:
+   страница никогда не будет шире экрана */
+html, body { overflow-x: hidden; }
+
 body {
   font-family: var(--font-body);
   font-size: 17px;
@@ -39,13 +43,22 @@ body {
   min-height: 100dvh;
 }
 
-img { max-width: 100%; display: block; }
+img { max-width: 100%; height: auto; display: block; }
 
-.container { width: min(1120px, 100% - 40px); margin-inline: auto; }
+/* Чтобы длинные слова и колонки сетки не растягивали страницу */
+h1, h2, h3, p { overflow-wrap: break-word; }
+.hero-inner > *, .about-grid > *, .teacher-grid > *,
+.signup-inner > *, .contacts-grid > * { min-width: 0; }
+
+.container {
+  max-width: 1120px;
+  margin-inline: auto;
+  padding-inline: 20px;
+}
 
 h1, h2, h3 { font-family: var(--font-display); font-weight: 400; line-height: 1.25; color: var(--ink); }
-h1 { font-size: clamp(34px, 5.5vw, 58px); }
-h2 { font-size: clamp(26px, 3.5vw, 40px); margin-bottom: 18px; }
+h1 { font-size: 34px; font-size: clamp(34px, 5.5vw, 58px); }
+h2 { font-size: 26px; font-size: clamp(26px, 3.5vw, 40px); margin-bottom: 18px; }
 h3 { font-size: 21px; }
 
 a { color: var(--ink); text-decoration-thickness: 2px; text-underline-offset: 3px; }
@@ -135,6 +148,7 @@ a:hover { color: var(--coral); }
   background: var(--paper);
   border-block: 2px solid rgba(86,62,121,.08);
   border-radius: 48px;
+  margin-inline: 12px; /* для старых браузеров */
   margin-inline: max(12px, calc((100vw - 1400px) / 2));
 }
 
@@ -240,9 +254,22 @@ a:hover { color: var(--coral); }
   body { font-size: 16px; }
   .cards, .price-cards { grid-template-columns: 1fr; }
   .hero-actions .btn { width: 100%; text-align: center; }
-  .badge { font-size: 12px; padding: 8px 13px; }
+
+  /* --- Главный экран на телефоне --- */
+  h1 { font-size: 28px; font-size: clamp(28px, 9vw, 36px); }
+  .lead { font-size: 17px; margin: 16px 0 24px; }
+  .hero { padding: 36px 0 52px; }
+  .hero-points li { font-size: 15px; }
+
+  /* Фото не шире экрана, ярлыки — внутри фото */
+  .hero-photo { max-width: 420px; margin-inline: auto; }
+  .badge { font-size: 11px; padding: 7px 11px; }
+  .hero-photo .badge[style*="left"] { left: 0 !important; }
+  .hero-photo .badge[style*="right"] { right: 0 !important; }
+
   .about-photos img:nth-child(2) { transform: none; }
   .stats { gap: 22px; }
+  .stat b { font-size: 28px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
